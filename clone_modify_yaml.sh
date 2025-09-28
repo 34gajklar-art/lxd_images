@@ -1,5 +1,5 @@
 #!/bin/bash
-# from https://github.com/oneclickvirt/lxd_images
+# from https://github.com/34gajklar-art/lxd_images
 # Thanks https://images.lxd.canonical.com/
 # 2025.08.19
 
@@ -253,7 +253,9 @@ build_or_list_images() {
         ver_num=${ver_nums[i]}
         for arch in "${architectures[@]}"; do
             for variant in "${variants[@]}"; do
-                local url="https://github.com/oneclickvirt/lxd_images/releases/download/${run_funct}/${run_funct}_${ver_num}_${version}_${arch}_${variant}.zip"
+                # 统一指向当前仓库（构建产物托管于 fork 的 Releases 页面）
+                local repo="${GITHUB_REPOSITORY:-34gajklar-art/lxd_images}"
+                local url="https://github.com/${repo}/releases/download/${run_funct}/${run_funct}_${ver_num}_${version}_${arch}_${variant}.zip"
                 if curl --output /dev/null --silent --head --fail "$url"; then
                     if [[ "$arch" == "x86_64" || "$arch" == "amd64" ]]; then
                         echo "${run_funct}_${ver_num}_${version}_${arch}_${variant}.zip" >>x86_64_all_images.txt

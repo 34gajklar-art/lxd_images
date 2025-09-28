@@ -1,5 +1,5 @@
 #!/bin/bash
-# by https://github.com/oneclickvirt/lxd_images
+# by https://github.com/34gajklar-art/lxd_images
 # 2025.02.01
 
 set -e
@@ -63,9 +63,10 @@ cleanup() {
 trap cleanup EXIT
 
 echo "开始下载镜像..."
-if ! curl -m 1800 -LO "https://github.com/oneclickvirt/lxd_images/releases/download/${image_name%%_*}/$image_name"; then
+REPO="${GITHUB_REPOSITORY:-34gajklar-art/lxd_images}"
+if ! curl -m 1800 -LO "https://github.com/${REPO}/releases/download/${image_name%%_*}/$image_name"; then
     echo "主下载失败，尝试备用下载源..."
-    if ! curl -m 1800 -LO "https://cdn.spiritlhl.net/https://github.com/oneclickvirt/lxd_images/releases/download/${image_name%%_*}/$image_name"; then
+    if ! curl -m 1800 -LO "https://cdn.spiritlhl.net/https://github.com/${REPO}/releases/download/${image_name%%_*}/$image_name"; then
         echo "错误：所有下载源均失败" | tee -a log
         echo "fail" > "$test_status_file"
         exit 1
